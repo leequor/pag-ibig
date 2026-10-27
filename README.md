@@ -43,6 +43,22 @@ Because of this, the three stations and the online monitor always see the same q
 
 ## How to Run
 
+### In GitHub Codespaces (nothing to install)
+
+1. On this repository page, click **Code → Codespaces → Create codespace on main**.
+2. Wait for the container to finish (Java 21 and the Java extension pack are installed automatically from `.devcontainer/devcontainer.json`).
+3. Open the terminal and run:
+
+```
+cd src
+javac *.java
+java PagIbigApp
+```
+
+In VS Code you can also press **F5** and choose **Run PagIbigApp**.
+
+### Locally (JDK 21 or newer)
+
 ```
 cd src
 javac *.java
