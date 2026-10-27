@@ -1,0 +1,50 @@
+@startuml PagIbigSingleton
+title Centralized Queuing System for Pag-ibig Office (Singleton Pattern)
+skinparam classAttributeIconSize 0
+
+class QueueManager <<Singleton>> {
+  -{static} instance : QueueManager
+  - currentNumber : int
+  - QueueManager()
+  + {static} getInstance() : QueueManager
+  + issueNumber() : int
+  + getCurrentNumber() : int
+  + resetNumber(number : int) : void
+}
+
+class HelpDeskStation {
+  - stationName : String
+  - queueManager : QueueManager
+  + HelpDeskStation(stationName : String)
+  + serveNextCustomer() : void
+  + resetQueue(number : int) : void
+  + getStationName() : String
+}
+
+class OnlineMonitor {
+  - queueManager : QueueManager
+  - refreshMillis : long
+  - lastShown : int
+  + OnlineMonitor(refreshMillis : long)
+  + run() : void
+  + stop() : void
+}
+
+class PagIbigApp <<Client>> {
+  + {static} main(args : String[]) : void
+}
+
+QueueManager --> QueueManager : instance
+
+HelpDeskStation --> QueueManager : uses
+OnlineMonitor --> QueueManager : reads
+PagIbigApp ..> HelpDeskStation : creates
+PagIbigApp ..> OnlineMonitor : creates
+
+note bottom of QueueManager
+  Only one QueueManager object exists.
+  Every station and the online monitor
+  share this instance.
+end note
+
+@enduml
